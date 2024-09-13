@@ -30,7 +30,7 @@ function App() {
                 <Route path="/:subjectName/:lessonName" element={<SubjectCategory />} />
                 <Route path="/:subjectName/:lessonName/quizes" element={<QuizSet />} />
                 <Route path="/:subjectName/:lessonName/notes" element={<PdfViewer />} />
-                <Route path="/:subjectName/:lessonName/:quizes/:quiz" element={<QuizPage />} />
+                <Route path="/:subjectName/:lessonName/:quizes/:quizName" element={<QuizPage />} />
                 <Route path="/contact-us" element={<ContactUs />} />
                 <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                 <Route path="/terms-and-conditions" element={<Terms />} />

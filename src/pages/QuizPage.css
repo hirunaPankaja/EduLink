@@ -1,70 +1,53 @@
+/* QuizPage.css */
+
 .quiz-container {
+    padding: 20px;
     max-width: 600px;
     margin: 0 auto;
-    padding: 20px;
-    text-align: center;
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-h2, h3 {
-    color: #333;
-}
-
-p {
-    font-size: 18px;
-    color: #555;
-}
-
-.answers {
-    margin: 20px 0;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
 }
 
 .answers button {
+    display: block;
+    margin: 5px 0;
     padding: 10px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
     cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
 }
 
-.answers button:hover {
-    background-color: #0056b3;
+.answers button.selected {
+    background-color: #d1e7dd;
 }
 
-.answers .selected {
-    background-color: #28a745;
+.navigation-buttons button {
+    margin: 5px;
 }
 
-button {
-    padding: 10px 20px;
-    background-color: #17a2b8;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
+.results {
+    margin-top: 20px;
 }
 
-button:hover {
-    background-color: #138496;
+.result-item {
+    margin-bottom: 15px;
 }
 
-button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
+.result-item .question {
+    font-weight: bold;
 }
 
-.quiz-container .time-remaining {
-    font-size: 16px;
-    margin-top: 10px;
-    color: #ff0000;
+.result-item .answer.correct {
+    color: green;
+}
+
+.result-item .answer.incorrect {
+    color: red;
+}
+
+.correct-answer {
+    font-style: italic;
+}
+
+.summary {
+    font-weight: bold;
+    margin-top: 20px;
 }

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './QuizPage.css';
-import {useParams} from "react-router-dom";
+import { useParams } from 'react-router-dom';
 
 function QuizPage() {
     const [quizzes, setQuizzes] = useState([]);
@@ -13,19 +13,23 @@ function QuizPage() {
     const [success, setSuccess] = useState('');
     const [quizCompleted, setQuizCompleted] = useState(false);
     const [userAnswers, setUserAnswers] = useState([]);
-    const { subjectName, lessonName,quizes } = useParams();
+    const [correctAnswers, setCorrectAnswers] = useState([]);
+    const [results, setResults] = useState([]);
+    const { quizName } = useParams(); // Get route parameters
+
     useEffect(() => {
         // Fetch quizzes when the component mounts
         const fetchQuizzes = async () => {
             setLoading(true);
             try {
-                const response = await axios.get(`http://localhost:8085/api/quizzes/bySubjectAndLesson/${subjectName}/${lessonName}`);
+                const response = await axios.get(`http://localhost:8085/api/quizzes/quizSet/${quizName}`);
                 const formattedQuizzes = response.data.map(quiz => ({
                     question: quiz.question,
                     answers: [quiz.answer_1, quiz.answer_2, quiz.answer_3, quiz.answer_4],
                     correctAnswer: quiz.correct_answer,
                 }));
                 setQuizzes(formattedQuizzes);
+                setCorrectAnswers(formattedQuizzes.map(q => q.correctAnswer));
                 setError('');
             } catch (err) {
                 console.error('Error fetching quizzes:', err);
@@ -36,7 +40,7 @@ function QuizPage() {
         };
 
         fetchQuizzes();
-    }, []);
+    }, [quizName]);
 
     useEffect(() => {
         if (timeRemaining > 0 && !quizCompleted) {
@@ -66,7 +70,6 @@ function QuizPage() {
             } else {
                 setQuizCompleted(true);
                 setSuccess('Quiz completed! Reviewing results...');
-                // You can process results here or send them to an API
                 processResults();
             }
         }
@@ -81,15 +84,12 @@ function QuizPage() {
     };
 
     const processResults = () => {
-        // Here you can calculate results based on userAnswers and quizzes
-        // For now, we'll just log it
         const results = quizzes.map((quiz, index) => ({
             question: quiz.question,
             userAnswer: userAnswers.find(answer => answer.questionIndex === index)?.answer,
             correctAnswer: quiz.correctAnswer
         }));
-        console.log('Quiz Results:', results);
-        // You can also send results to an API or store them in state
+        setResults(results);
     };
 
     if (loading) {
@@ -110,31 +110,55 @@ function QuizPage() {
         <div className="quiz-container">
             <h2>Quiz</h2>
             <p>Time remaining: {timeRemaining} seconds</p>
-            <h3>Question {currentQuestionIndex + 1}</h3>
-            <p>{currentQuiz.question}</p>
+            {!quizCompleted ? (
+                <>
+                    <h3>Question {currentQuestionIndex + 1}</h3>
+                    <p>{currentQuiz.question}</p>
 
-            <div className="answers">
-                {currentQuiz.answers.map((answer, index) => (
-                    <button
-                        key={index}
-                        onClick={() => handleAnswerSelection(answer)}
-                        className={selectedAnswer === answer ? 'selected' : ''}
-                        disabled={quizCompleted}
-                    >
-                        {answer}
+                    <div className="answers">
+                        {currentQuiz.answers.map((answer, index) => (
+                            <button
+                                key={index}
+                                onClick={() => handleAnswerSelection(answer)}
+                                className={selectedAnswer === answer ? 'selected' : ''}
+                                disabled={quizCompleted}
+                            >
+                                {answer}
+                            </button>
+                        ))}
+                    </div>
+
+                    <div className="navigation-buttons">
+                        <button onClick={handlePrevQuestion} disabled={currentQuestionIndex === 0 || quizCompleted}>
+                            Prev
+                        </button>
+                        <button onClick={handleNextQuestion} disabled={timeRemaining === 0 || !selectedAnswer || quizCompleted}>
+                            {currentQuestionIndex === quizzes.length - 1 ? 'Finish' : 'Next'}
+                        </button>
+                    </div>
+                </>
+            ) : (
+                <>
+                    <h3>Quiz Results</h3>
+                    <div className="results">
+                        {results.map((result, index) => (
+                            <div key={index} className="result-item">
+                                <p className="question">{result.question}</p>
+                                <p className={`answer ${result.userAnswer === result.correctAnswer ? 'correct' : 'incorrect'}`}>
+                                    Your Answer: {result.userAnswer}
+                                </p>
+                                <p className="correct-answer">
+                                    Correct Answer: {result.correctAnswer}
+                                </p>
+                            </div>
+                        ))}
+                    </div>
+                    <p className="summary">You got {results.filter(result => result.userAnswer === result.correctAnswer).length} out of {quizzes.length} correct.</p>
+                    <button onClick={handlePrevQuestion} disabled={currentQuestionIndex === 0}>
+                        Prev Question
                     </button>
-                ))}
-            </div>
-
-            <div className="navigation-buttons">
-                <button onClick={handlePrevQuestion} disabled={currentQuestionIndex === 0 || quizCompleted}>
-                    Prev
-                </button>
-                <button onClick={handleNextQuestion} disabled={timeRemaining === 0 || !selectedAnswer || quizCompleted}>
-                    {currentQuestionIndex === quizzes.length - 1 ? 'Finish' : 'Next'}
-                </button>
-            </div>
-
+                </>
+            )}
             {success && <p className="success">{success}</p>}
         </div>
     );
