@@ -1,0 +1,65 @@
+.home-page {
+    text-align: center;
+    display: flex;
+    flex-direction: column; /* Ensure vertical alignment of content */
+    align-items: center;
+}
+
+.services {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding: 60px 0;
+    flex-wrap: wrap; /* Allows services to wrap on smaller screens */
+    width: 100%;
+    max-width: 1200px; /* Optional: limit the width of the container */
+}
+
+.service {
+    width: 300px;
+    text-align: center;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #fff;
+    transition: transform 0.3s ease;
+    margin: 15px; /* Adds margin between services on smaller screens */
+}
+
+.service:hover {
+    transform: scale(1.05);
+}
+
+.service img {
+    width: 50%;
+    border-radius: 100px;
+}
+
+.service h3 {
+    margin-top: 15px;
+    font-size: 24px;
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+    .services {
+        gap: 20px;
+    }
+
+    .service {
+        width: 50%; /* Each service takes full width on smaller screens */
+        max-width: 90%; /* Restrict max width for better appearance */
+    }
+
+    .service img {
+        width: 70%; /* Adjust image size for smaller screens */
+    }
+}
+.footer {
+    background-color: rgb(3, 87, 87);
+    color: white;
+    padding: 20px;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+}

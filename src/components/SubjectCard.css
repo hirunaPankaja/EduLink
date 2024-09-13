@@ -1,0 +1,45 @@
+/* SubjectCard.css */
+
+
+.subject-card {
+  background-color: rgba(92, 194, 228, 0.62);
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 10px;
+  padding: 20px;
+  transition: transform 0.3s, box-shadow 0.3s;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+
+  justify-content: space-between;
+}
+
+.subject-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.subject-icon {
+  font-size: 2rem;
+  margin-right: 20px;
+}
+
+.subject-info {
+  flex: 1;
+}
+
+.subject-info h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.subject-info p {
+  margin: 5px 0 0;
+  color: #666;
+}
+
+

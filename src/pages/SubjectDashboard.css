@@ -1,0 +1,28 @@
+/* Ensure the body and html cover the full viewport */
+
+
+/* Container for the entire dashboard */
+.container-dashboard {
+  display: flex;
+  flex-direction: column; /* Stacks content vertically */
+  min-height: 100vh; /* Full height of viewport */
+  overflow: hidden; /* Prevents overflow on the main container */
+}
+
+body,html {
+ height: auto;
+  margin: 0;
+  background-color: rgba(200, 200, 100, 0.5); /* Adjust background color */
+}
+/* Dashboard content area */
+.subjects-dashboard {
+  flex: 1; /* Allows this div to take up the remaining space */
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: flex-start;
+  width: 100%;
+  padding: 20px;
+    color:black;
+  overflow-y: auto; /* Vertical scrolling if content overflows */
+}

@@ -1,0 +1,14 @@
+/* SubjectDashboard.css */
+.container-ol-dashboard {
+    display: flex;
+    flex-direction: column; /* Stacks content vertically */
+    min-height: 100vh; /* Full height of viewport */
+}
+
+.subjects-ol {
+    display: flex;
+    flex-direction: column; /*  cards vertically */
+    gap: 10px; /* Space between cards */
+    align-items: flex-start; /* Align the cards to the left */
+    width: 100%;
+}
